@@ -1,6 +1,6 @@
 # Search & Filtering Guide for Spring Boot APIs
 
-## Overview
+## Overview of this skill
 
 Search and filtering allow clients to query datasets efficiently.
 
