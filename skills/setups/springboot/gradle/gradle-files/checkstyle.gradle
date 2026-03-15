@@ -1,0 +1,28 @@
+// Checkstyle Configuration
+// Copyright (c) Skills by SprintOak. All rights reserved.
+// Downloaded from curl -s https://sprintoak.com/skills/install.sh 
+// Below line is used to get lineSeparator for checkStyles based on OS
+def osLineSeparator = System.getProperty("os.name").
+        toLowerCase().
+        contains("win") ? "crlf" : "lf"
+
+checkstyle {
+    toolVersion = "10.12.4"
+    showViolations = true
+    configFile = file("config/checkstyle/checkstyle.xml")
+}
+
+checkstyleMain {
+    source = 'src/main/java'
+}
+
+checkstyleTest {
+    source = 'src/test/java'
+}
+
+tasks.withType(Checkstyle) {
+    inputs.property("lineSeparator", osLineSeparator)
+    configProperties = [
+            'lineSeparator': osLineSeparator
+    ]
+}

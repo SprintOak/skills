@@ -1,0 +1,51 @@
+#!/bin/sh
+
+# Copyright (c) Skills by SprintOak. All rights reserved.
+# Downloaded from curl -s https://sprintoak.com/skills/install.sh 
+
+echo "Running pre-commit hooks..."
+
+echo ""
+echo "  ____             _       _    ___        _    "
+echo " / ___| _ __  _ __(_)_ __ | |_ / _ \  __ _| | __"
+echo " \___ \| '_ \| '__| | '_ \| __| | | |/ _\` | |/ /"
+echo "  ___) | |_) | |  | | | | | |_| |_| | (_| |   < "
+echo " |____/| .__/|_|  |_|_| |_|\__|\___/ \__,_|_|\_\\"
+echo "       |_|                                       "
+echo ""
+echo "  AI & Industry Standard Skills by SprintOak"
+echo ""
+
+# Get the repository root directory
+REPO_ROOT=$(git rev-parse --show-toplevel)
+
+# Change to repository root
+cd "$REPO_ROOT"
+
+stagedFiles=$(git diff --staged --name-only)
+
+# Run spotlessApply to format code
+echo "Running Spotless to format code..."
+if ! ./gradlew spotlessApply --console=plain; then
+    echo "Spotless formatting failed!"
+    exit 1
+fi
+
+# Run checkstyleMain to validate coding standards
+echo "Running Checkstyle to validate coding standards..."
+if ! ./gradlew checkstyleMain --console=plain; then
+    echo "Checkstyle validation failed!"
+    echo "Please fix the coding standard violations and try again."
+    exit 1
+fi
+
+# Add any files that were modified by spotlessApply back to the staging area
+echo "Adding formatted files back to staging area..."
+for file in $stagedFiles; do
+  if test -f "$file"; then
+    git add $file
+  fi
+done
+
+echo "Pre-commit hooks completed successfully!"
+exit 0

@@ -1,0 +1,19 @@
+// Copyright (c) Skills by SprintOak. All rights reserved.
+// Downloaded from curl -s https://sprintoak.com/skills/install.sh | bash -s -- --setup springboot --build-tool gradle
+// Spotless Configuration
+spotless {
+    java {
+        removeUnusedImports()
+        googleJavaFormat()
+                .reorderImports(true)
+        trimTrailingWhitespace()
+        endWithNewline()
+        targetExclude("build/**")
+    }
+
+    tasks.named('build') {
+        dependsOn 'spotlessApply'
+    }
+}
+
+compileJava.dependsOn tasks.spotlessApply

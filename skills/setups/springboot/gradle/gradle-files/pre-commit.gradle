@@ -1,0 +1,25 @@
+// Git Hooks Configuration
+// Copyright (c) Skills by SprintOak. All rights reserved.
+// Downloaded from curl -s https://sprintoak.com/skills/install.sh 
+
+task installGitHooks(type: Copy) {
+    description = 'Install git hooks to .git/hooks directory'
+    group = 'git hooks'
+    
+    from 'scripts/git-hooks/'
+    into '.git/hooks'
+    fileMode = 0755
+    
+    doLast {
+        println "Git hooks installed successfully!"
+        println "Pre-commit hook will now run spotlessApply and checkstyleMain before each commit."
+    }
+}
+
+tasks.named('build') {
+    dependsOn installGitHooks
+}
+
+tasks.named('compileJava') {
+    dependsOn installGitHooks
+}
