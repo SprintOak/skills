@@ -5,8 +5,7 @@
 Pagination is used to fetch large datasets in smaller chunks to improve
 performance and reduce memory usage.
 
-Typical use cases: - Listing students - Listing admissions - Listing
-employees - Audit logs - Reports
+Typical use cases: - Listing records - Audit logs - Reports
 
 Spring Boot provides built-in pagination support through **Pageable**
 and **Page** interfaces.
